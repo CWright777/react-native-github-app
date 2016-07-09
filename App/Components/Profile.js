@@ -59,4 +59,9 @@ class Profile extends Component{
     )
   }
 }
+
+Profile.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+};
+
 module.exports = Profile;

@@ -7,21 +7,35 @@ import {
   View,
 } from 'react-native';
 
-const Main = require('./App/Components/Main')
-const NavigationBarRouteMapper = require('./App/Components/NavBarMapper')
+const Main = require('./App/Components/Main');
+const Profile = require('./App/Components/Profile');
+const NavigationBarRouteMapper = require('./App/Components/NavBarMapper');
+const Dashboard = require('./App/Components/Dashboard');
 
 class githubNoteTaker extends Component {
+  renderScene(route,navigator){
+    const routeId = route.id;
+    if(routeId === 'Main'){
+      return <Main navigator={navigator}/>
+    } else if(routeId === 'Dashboard') {
+      const userInfo =  route.passProps
+      return <Dashboard userInfo={userInfo['userInfo']} navigator={navigator}/>
+    } else if(routeId === 'Profile') {
+      const userInfo =  route.passProps
+      return <Profile userInfo={userInfo['userInfo']} navigator={navigator}/>
+    }
+  }
   render() {
     return (
       <Navigator
-        initialRoute={{title: 'Github Notetaker', index: 0, component: Main}}
-        renderScene={(route,navigator) => {
-          if (route.component) {
-            return React.createElement(route.component, { ...this.props, ...route.passProps, navigator, route } );
-          }
-        }}
-        navigationBar={ <Navigator.NavigationBar routeMapper={NavigationBarRouteMapper} /> } 
-      />
+        initialRoute={{id: 'Main', url:''}}
+        renderScene={this.renderScene}
+        configureScene={() => { return Navigator.SceneConfigs.FloatFromRight; }}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={NavigationBarRouteMapper}
+          /> 
+        } />
     );
   }
 }

@@ -44,8 +44,7 @@ class Dashboard extends Component{
   }
   goToProfile(){
     this.props.navigator.push({
-        component: Profile,
-        title: 'Profile Page',
+        id: 'Profile',
         passProps: {userInfo: this.props.userInfo}
     })
   }
@@ -56,6 +55,7 @@ class Dashboard extends Component{
     console.log('Notes')
   }
   render(){
+    console.log(this)
     return (
       <View style={styles.container}>
         <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
@@ -84,5 +84,9 @@ class Dashboard extends Component{
     )
   }
 }
+
+Dashboard.propTypes = {
+  userInfo: React.PropTypes.object.isRequired
+};
 
 module.exports = Dashboard
