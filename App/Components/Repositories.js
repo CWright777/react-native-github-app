@@ -38,7 +38,11 @@ const styles = StyleSheet.create({
 
 class Repositories extends Component{
   openPage(url){
-    console.log('url',url)
+    this.props.navigator.push({
+      id: 'Web View',
+      title: 'Web View',
+      url
+    })
   }
   render(){
     const repos = this.props.repos;

@@ -12,6 +12,7 @@ const Profile = require('./App/Components/Profile');
 const NavigationBarRouteMapper = require('./App/Components/NavBarMapper');
 const Dashboard = require('./App/Components/Dashboard');
 const Repositories = require('./App/Components/Repositories');
+const Web = require('./App/Components/Helpers/WebView')
 
 class githubNoteTaker extends Component {
   renderScene(route,navigator){
@@ -25,9 +26,13 @@ class githubNoteTaker extends Component {
       const userInfo =  route.passProps
       return <Profile userInfo={userInfo['userInfo']} navigator={navigator}/>
     } else if(routeId === 'Repositories') {
-      console.log(route)
       const userInfo =  route.userInfo
       return <Repositories repos={route.repos} userInfo={userInfo} navigator={navigator}/>
+    } else if(routeId === 'Web View') {
+      const url =  route.url
+      return <Web url={url} navigator={navigator}/>
+    } else if(routeId === 'Notes') {
+      return <Notes userInfo={route.userInfo} notes={route.notes} navigator={navigator}/>
     }
   }
   render() {

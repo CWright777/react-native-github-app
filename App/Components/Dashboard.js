@@ -62,7 +62,16 @@ class Dashboard extends Component{
     })
   }
   goToNotes(){
-    console.log('Notes')
+    api.getNotes(this.props.userInfo.login)
+      .then((res) => {
+        res = res || {};
+        this.props.navigator.push({
+          title: 'Notes',
+          id: 'Notes',
+          note: res,
+          userInfo: this.props.userInfo
+        })
+      })
   }
   render(){
     return (

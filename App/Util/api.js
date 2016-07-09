@@ -8,6 +8,18 @@ const api = {
     username = username.toLowerCase().trim();
     const url = `https://api.github.com/users/${username}/repos`;
     return fetch(url).then((res) => res.json());
+  },
+  getNotes(username){
+    console.log(username)
+    const url = `https://github-saver-e41a4.firebaseio.com/${username}.json`
+    return fetch(url).then((res) => res.json());
+  },
+  addNote(username, note){
+    const url = `https://github-saver-e41a4.firebaseio.com/${username}.json`
+    return fetch(url, {
+      method: 'post',
+      body: JSON.stringify(note)
+    }).then((res) => res.json());
   }
 };
 
