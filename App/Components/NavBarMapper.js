@@ -22,7 +22,7 @@ module.exports = {
       return null;
    },
    Title(route, navigator, index, navState) {
-      return <Text style={ styles.navBarText }>Hello From My App!</Text>
+      return <Text style={ styles.navBarText }>{route.title}</Text>
    }
 };
 

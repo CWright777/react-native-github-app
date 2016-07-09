@@ -7,9 +7,11 @@ import {
 } from 'react-native';
 
 const Badge = require('./Badge');
+const Separator = require('./Helpers/Separator');
 
 const styles = StyleSheet.create({
     container: {
+    marginTop: 65,
         flex: 1
     },
     buttonText: {
@@ -36,7 +38,7 @@ class Profile extends Component{
   }
   render(){
     const userInfo = this.props.userInfo;
-    const topicArr = ['company','location','followers','email','bio','public_repos'];
+    const topicArr = ['company','location','followers','following','email','bio','public_repos'];
     const list = topicArr.map((item,index) => {
       if(!userInfo[item]){
         return <View key={index} />
@@ -47,6 +49,7 @@ class Profile extends Component{
               <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
               <Text style={styles.rowContent}> {userInfo[item]} </Text>
             </View>
+            <Separator />
           </View>
         )
       }

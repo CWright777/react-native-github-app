@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 const Profile = require('./Profile')
+const api = require('../Util/api')
 const styles = StyleSheet.create({
   container: {
     marginTop: 65,
@@ -44,18 +45,26 @@ class Dashboard extends Component{
   }
   goToProfile(){
     this.props.navigator.push({
-        id: 'Profile',
-        passProps: {userInfo: this.props.userInfo}
+      id: 'Profile',
+      title: 'Profile Page',
+      passProps: {userInfo: this.props.userInfo}
     })
   }
   goToRepos(){
-    console.log('Repos')
+    api.getRepos(this.props.userInfo.login)
+    .then((res) => {
+      this.props.navigator.push({
+        id: 'Repositories',
+        title: 'Repos Page',
+        userInfo: this.props.userInfo,
+        repos: res
+      })
+    })
   }
   goToNotes(){
     console.log('Notes')
   }
   render(){
-    console.log(this)
     return (
       <View style={styles.container}>
         <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
