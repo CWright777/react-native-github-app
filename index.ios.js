@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   Navigator,
-  View
+  View,
 } from 'react-native';
 
 const Main = require('./App/Components/Main')

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import api from '../Util/api'
 import {
   Text,
   StyleSheet,
-  View
+  View,
+  TextInput,
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } from 'react-native';
 
 
+const Dashboard = require('./Dashboard')
 const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
@@ -51,13 +56,70 @@ const styles = StyleSheet.create({
 });
 
 class Main extends Component{
-    render() {
-        return(
-            <View style={styles.mainContainer}>
-                <Text> Testing the Router </Text>
-            </View>
-        )
+  constructor(props){
+    super(props);
+    this.state = {
+      username: '',
+      isLoading: false,
+      error: false
     }
+  }
+  handleChange(event){
+    this.setState({
+      username: event.nativeEvent.text
+    });
+  }
+  handleSubmit(){
+    this.setState({
+      isLoading: true
+    })
+    api.getBio(this.state.username)
+      .then((res) => {
+        if(res.message === 'Not Found'){
+          this.setState({
+            error: 'User not found',
+            isLoading: false
+          })
+        } else {
+          this.props.navigator.push({
+            title: res.name || "Select an Option",
+            component: Dashboard,
+            passProps: {userInfo: res}
+          })
+          this.setState({
+            isLoading: false,
+            error: false,
+            username: ''
+          })
+        }
+      })
+  }
+  render() {
+    const showErr = (
+      this.state.error ? <Text> {this.state.error} </Text> : <View></View>
+    );
+    return(
+      <View style={styles.mainContainer}>
+        <Text style={styles.title}> Search for a Github User</Text>
+        <TextInput
+          style={styles.searchInput}
+          value={this.state.username}
+          onChange={this.handleChange.bind(this)}/>
+        <TouchableHighlight
+          style={styles.button}
+          onPress={this.handleSubmit.bind(this)}
+          underlayColor="white">
+          <Text style={styles.buttonText}> SEARCH</Text>
+        </TouchableHighlight>
+        <ActivityIndicatorIOS
+          animating={this.state.isLoading}
+          color="#111"
+          size="large">
+        </ActivityIndicatorIOS>
+        {showErr}
+      </View>
+    )
+  }
 };
 
 module.exports = Main;

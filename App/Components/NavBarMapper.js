@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  TouchableHighlight,
   Text,
 } from 'react-native';
 module.exports = {
